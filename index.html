@@ -1,0 +1,57 @@
+const balanceAvailable = "2.574,00"; // saldo disponível
+const balanceOutstanding = "7.432,34"; // saldo pendente
+const goalAmount = 100000;
+
+function targetPercentage(available, pending) {
+	const totalAmount =
+		Number(available.replace(".", "").replace(",", ".")) +
+		Number(pending.replace(".", "").replace(",", ".")); // 16766234
+
+	// Calcular a porcentagem em relação a 100k
+	const percentage = (totalAmount / goalAmount) * 100;
+
+	// Arredondar para uma casa decimal se necessário
+	const amount =
+		percentage % 1 === 0 ? percentage.toFixed(0) : percentage.toFixed(1);
+
+	return amount;
+}
+
+const result = targetPercentage(balanceAvailable, balanceOutstanding);
+
+document.querySelector(
+	".shadow-none.flex.flex-col.text-center.whitespace-nowrap.text-white.justify-center.bg-green-800"
+).style.width = `${result}%`; //muda tamanho da barra de conquista
+
+// Selecionar elemento "Saldo disponível"
+const saldoDisponivelElement = document.querySelector(
+	".border-green-400 .text-3xl.font-semibold.text-gray-900"
+);
+
+// Selecionar elemento "Saldo pendente"
+const saldoPendenteElement = document.querySelector(
+	".border-yellow-400 .text-3xl.font-semibold.text-gray-900"
+);
+
+// Verificar se os elementos foram encontrados
+if (saldoDisponivelElement && saldoPendenteElement) {
+	// Acessar e exibir o conteúdo dos elementos
+	const saldoDisponivel =
+		(saldoDisponivelElement.textContent = `R$ ${balanceAvailable}`);
+	const saldoPendente =
+		(saldoPendenteElement.textContent = `R$ ${balanceOutstanding}`);
+
+	console.log("Saldo disponível:", saldoDisponivel);
+	console.log("Saldo pendente:", saldoPendente);
+
+	// Aqui você pode realizar qualquer modificação necessária nos valores
+} else {
+	console.log("Elementos não encontrados.");
+}
+
+// altera imagem
+document.querySelector("img.w-6.mr-2").src =
+	"https://cdn.discordapp.com/attachments/1192952790771834912/1198508597521424455/images-removebg-preview.png?ex=65bf291c&is=65acb41c&hm=79b26bc27aa1caee9dc2165b503e92c0f4258d1fb9ba4a824ff13eed5ef9bbd0&";
+document.querySelector(
+	".text-white.text-sm.font-bold.leading-none.w-full.text-right"
+).innerText = `R$ ${result}k / R$ 100k`; // altera valor da meta
